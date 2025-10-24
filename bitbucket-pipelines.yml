@@ -1,0 +1,62 @@
+image: node:20
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Copy Files and Deploy
+          script:
+            - pipe: atlassian/scp-deploy:0.3.3
+              variables:
+                USER: $USER
+                SERVER: $HOST
+                REMOTE_PATH: /var/www/intd-dashboard-temp
+                LOCAL_PATH: ./*
+
+            - pipe: atlassian/ssh-run:0.8.1
+              variables:
+                SSH_USER: $USER
+                SERVER: $HOST
+                MODE: "command"
+                COMMAND: | 
+                      cd /var/www/intd-dashboard-temp &&
+                      cp /var/www/intd-dashboard/Dockerfile . &&
+                      cp /var/www/intd-dashboard/.env-cmdrc.json . &&
+                      docker build -t intd-dashboard:$BITBUCKET_BUILD_NUMBER -f Dockerfile . &&
+                      if grep -q "$PORT1" /etc/nginx/sites-enabled/internationaldigitaldollar.com; then
+                        echo "Switching to PORT2: $PORT2" &&
+                        docker run --name  Intd-dashboard-b --restart=unless-stopped -d -p $PORT2:3000 --network bridge intd-dashboard:$BITBUCKET_BUILD_NUMBER &&
+                        sed -i "s/localhost:$PORT1/localhost:$PORT2/g" /etc/nginx/sites-enabled/internationaldigitaldollar.com &&
+                        docker rm -f Intd-dashboard-a || true;
+                      else
+                        echo "Switching to PORT1: $PORT1" &&
+                        docker run --name Intd-dashboard-a --restart=unless-stopped -d -p $PORT1:3000 --network bridge intd-dashboard:$BITBUCKET_BUILD_NUMBER &&
+                        sed -i "s/localhost:$PORT2/localhost:$PORT1/g" /etc/nginx/sites-enabled/internationaldigitaldollar.com &&
+                        docker rm -f Intd-dashboard-b || true;
+                      fi &&
+                      systemctl reload nginx &&
+                      docker system prune -af || true &&
+                      rm -rf /var/www/intd-dashboard-temp &&
+                      mkdir -p /var/www/intd-dashboard-temp
+
+          after-script:
+            - |
+              if [ "$BITBUCKET_EXIT_CODE" -eq 0 ]; then
+                STATUS="SUCCESS ✅"
+              else
+                STATUS="FAILED ❌"
+              fi
+            - pipe: atlassian/email-notify:0.13.2
+              variables:
+                USERNAME: $SMTP_USERNAME
+                PASSWORD: $EMAIL_PASS
+                FROM: "muhammad@webevis.com"
+                TO: "muhammad@webevis.com, abdulqayyum@webevis.com"
+                HOST: "smtp.gmail.com"
+                PORT: "587"
+                SUBJECT: "Deployment - INTD-Dashboard"
+                BODY_PLAIN: |
+                  Deployment Status: ${STATUS}
+                  Build: $BITBUCKET_BUILD_NUMBER
+                  Branch: $BITBUCKET_BRANCH
+                  Commit: $BITBUCKET_COMMIT

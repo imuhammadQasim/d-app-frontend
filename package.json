@@ -1,0 +1,48 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:local": "env-cmd -e local next dev --turbopack",
+    "dev:staging": "env-cmd -e staging next dev --turbopack",
+    "build:local": "env-cmd -e local next build",
+    "build:staging": "env-cmd -e staging next build",
+    "build:prod": "env-cmd -e production next build",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^3.9.2",
+    "@stripe/stripe-js": "^7.9.0",
+    "date-fns": "^4.1.0",
+    "env-cmd": "^10.1.0",
+    "ethers": "^6.15.0",
+    "formik": "^2.4.6",
+    "highcharts": "^12.1.2",
+    "highcharts-react-official": "^3.2.1",
+    "leaflet": "^1.9.4",
+    "lodash": "^4.17.21",
+    "next": "^15.1.5",
+    "rc-util": "^5.44.3",
+    "react": "^19.1.1",
+    "react-datepicker": "^7.6.0",
+    "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
+    "react-leaflet": "^5.0.0",
+    "react-loading-skeleton": "^3.5.0",
+    "react-media-hook": "^0.5.0",
+    "react-papaparse": "^4.4.0",
+    "react-phone-number-input": "^3.4.11",
+    "react-select": "^5.9.0",
+    "react-toastify": "^11.0.3",
+    "stripe": "^18.4.0",
+    "styled-components": "^6.1.14",
+    "thirdweb": "^5.105.33"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.5"
+  }
+}

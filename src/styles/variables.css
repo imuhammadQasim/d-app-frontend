@@ -1,0 +1,79 @@
+/* css variable define in .css file because they gave error when using within CssVars(polished) */
+
+:root {
+    /* variables */
+    --primary: #98ff98;
+    --secondary: #006f00;
+    --gray: #f9f9f9;
+    --gray-50: #cfcfcf;
+    --gray-100: #f1f1f1;
+    --gray-150: #d5cbbf;
+    --gray-200: #9d9d9d;
+    --gray-light: #6d756d;
+    --anti-flash: #ecedec;
+    --success: #40f840;
+    --white: #fff;
+    --info-text: #06baab;
+    --info: #98f5ed;
+    --off-white: #eaffea;
+    --text-color: #313131;
+    --black: #000;
+    --dark: #303030;
+    --dark-50: #343434;
+    --dark-100: rgba(255, 255, 255, 0.2);
+    --dark-150: rgba(255, 255, 255, 0.1);
+    --danger: #ffaf9d;
+    --danger-100: #ff532c;
+    --yellow: #fecf31;
+    --golden: #ffd700;
+    --light-brown: #747c74;
+    --brown: #d5cbbf;
+    --pink: #f2e4ff;
+
+    --toastify-color-success: #408f8c;
+    --toastify-icon-color-success: #408f8c;
+    --toastify-color-error: rgba(215, 65, 32, 1);
+    --toastify-icon-color-error: #dc4320;
+    --toastify-font-family: "Outfit", sans-serif;
+
+    --base-font-sans-serif: "Urbanist", serif;
+    --base-font-serif: "Urbanist", "Times", "Baskerville", "GeorFgia", serif;
+
+    /* Body */
+    --base-text-color: var(--text-color);
+    --base-background-color: var(--gray);
+    --font-size-base: 16px;
+    --line-height-base: 1.3;
+    --base-font-family: var(--base-font-sans-serif);
+
+    --base-min-width: 375px;
+
+    /*  Links */
+    --link-color: var(--primary);
+
+    /*  Forms */
+    --form-element-padding: 0.75rem 0.9375rem;
+    --form-element-padding-lg: 20px 30px;
+    --form-element-border-color: var(--gray);
+    --form-element-focus-border-color: var(--black);
+    --placeholder-color: var(--gray);
+
+    /* Headings */
+    --h1-font-size: 3.125rem; /* 50px */
+    --h2-font-size: 1.5625rem; /* 30px */
+    --h3-font-size: 1.25rem; /* 20px */
+    --h4-font-size: 1.125rem; /* 18px */
+    --h5-font-size: 16px; /* 16px */
+    --h6-font-size: 0.9375rem; /* 15px */
+
+    --headings-font-family: var(--base-font-family);
+    --headings-color: var(--primary-text-color);
+
+    --animation-speed: 0.3s;
+
+    --sm: 576px;
+    --md: 768px;
+    --lg: 992px;
+    --xl: 1200px;
+    --xxl: 1440px;
+}
